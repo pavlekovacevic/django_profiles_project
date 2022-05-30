@@ -8,13 +8,14 @@ from django.conf import settings
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
 
-    def create_user(self, email, name, password=None):
+    def create_user(self, email, name, password):
         """Create a new user profile"""
         if not email:
             raise ValueError('Users must have an email adress!')
+        
         email = self.normalize_email(email)
         user = self.model(email=email, name=name)
-        
+
         user.set_password(password)
         user.save(using=self._db)
 
